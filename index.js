@@ -17,7 +17,15 @@ const app = express();
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+// CORS setup
+app.use(
+  cors({
+    origin:
+      "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true, // If you're sending cookies with the request
+  })
+);
 app.use(morgan("dev"));
 
 // routs
