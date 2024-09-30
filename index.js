@@ -7,6 +7,10 @@ const connectDB = require("./config/db");
 //dot config
 dotenv.config();
 
+const allowedOrigins = [
+  "https://blood-bank-management-system-drab.vercel.app",
+  "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
+];
 // mongodb connection
 connectDB()
   .then(() => {})
@@ -17,13 +21,17 @@ const app = express();
 
 // middlewares
 app.use(express.json());
-// CORS setup
 app.use(
   cors({
-    origin:
-      "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: "GET,POST,PUT,DELETE",
-    credentials: true, // If you're sending cookies with the request
+    credentials: true, // If you're using cookies
   })
 );
 app.use(morgan("dev"));
