@@ -8,7 +8,7 @@ import {
 export const OrganistionMenue = [
   {
     name: "Inventory",
-    href: "/home",
+    href: "/inventory",
     icon: ArchiveBoxArrowDownIcon,
     current: true,
   },

@@ -68,9 +68,9 @@ export default function TableForAdmin({ data, list }) {
                 {data.map((record) => (
                   <tr key={record._id}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {/* {record?.organisationName} */}
+                      {record?.organisationName}
                       {record?.name}
-                      {/* {record?.hospitalName} */}
+                      {record?.hospitalName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {record.email}

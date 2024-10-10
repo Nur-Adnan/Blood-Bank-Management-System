@@ -9,7 +9,7 @@ export const handleLogin = (e, email, password, role, history) => {
     }
     store.dispatch(userLogin({ email, password, role, history }));
   } catch (error) {
-    alert("error accured");
+    alert("error occurred");
     console.log(error);
   }
 };
@@ -21,30 +21,43 @@ export const handleRegister = (
   email,
   password,
   phone,
-  // organisationName,
+  organisationName,
   address,
-  // hospitalName,
+  hospitalName,
+  nidNumber, // Added nidNumber parameter
   website,
   history
 ) => {
   e.preventDefault();
   try {
+    // Prepare the registration data conditionally based on the role
+    const registrationData = {
+      name,
+      role,
+      email,
+      password,
+      phone,
+      organisationName,
+      address,
+      hospitalName,
+    };
+
+    // If the role is "donar", include nidNumber and omit the website
+    if (role === "donar") {
+      registrationData.nidNumber = nidNumber;
+    } else {
+      registrationData.website = website;
+    }
+
+    // Dispatch the registration action with the appropriate data
     store.dispatch(
       userRegister({
-        name,
-        role,
-        email,
-        password,
-        phone,
-        // organisationName,
-        address,
-        // hospitalName,
-        website,
+        ...registrationData,
         history,
       })
     );
   } catch (error) {
-    alert("error accrued");
+    alert("error occurred");
     console.log(error);
   }
 };

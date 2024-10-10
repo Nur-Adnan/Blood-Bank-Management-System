@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 
 const roles = [
   { id: "admin", title: "Admin" },
-  // { id: "oraganisation", title: "Oraganisation" },
+  { id: "oraganisation", title: "Oraganisation" },
   { id: "donar", title: "Donar" },
-  // { id: "hospital", title: "Hospital" },
+  { id: "hospital", title: "Hospital" },
 ];
 
 function Form({ formType, formTitle, submitBtn }) {
@@ -17,12 +17,14 @@ function Form({ formType, formTitle, submitBtn }) {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
-  // const [organisationName, setOrganisationName] = useState("");
-  // const [hospitalName, setHospitalName] = useState("");
+  const [organisationName, setOrganisationName] = useState("");
+  const [hospitalName, setHospitalName] = useState("");
+  const [nidNumber, setNidNumber] = useState(""); // Add nidNumber state
   const [website, setWebsite] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const history = useNavigate();
+
   return (
     <div className="">
       <form
@@ -37,15 +39,16 @@ function Form({ formType, formTitle, submitBtn }) {
               email,
               password,
               phone,
-              // organisationName,
+              organisationName,
               address,
-              // hospitalName,
-              website,
+              hospitalName,
+              role === "donar" ? nidNumber : null, // Pass nidNumber if the role is donor
+              role !== "donar" ? website : null, // Pass website if the role is not donor
               history
             );
           }
         }}
-        className=" shadow-x-xl  px-4 py-8 rounded-lg"
+        className="shadow-x-xl px-4 py-8 rounded-lg"
       >
         <div className="text-center mb-6">
           <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
@@ -79,11 +82,11 @@ function Form({ formType, formTitle, submitBtn }) {
             ))}
           </div>
         </fieldset>
-        {/* switch statement */}
+
+        {/* Switch statement for rendering fields */}
         {(() => {
-          // eslint-disable-next-line
-          switch (true) {
-            case formType === "login": {
+          switch (formType) {
+            case "login": {
               return (
                 <>
                   <InputType
@@ -105,7 +108,7 @@ function Form({ formType, formTitle, submitBtn }) {
                 </>
               );
             }
-            case formType === "register": {
+            case "register": {
               return (
                 <>
                   <InputType
@@ -124,7 +127,7 @@ function Form({ formType, formTitle, submitBtn }) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  {/* remaining register fields */}
+
                   {(role === "admin" || role === "donar") && (
                     <InputType
                       labelText={"Name"}
@@ -135,10 +138,10 @@ function Form({ formType, formTitle, submitBtn }) {
                       onChange={(e) => setName(e.target.value)}
                     />
                   )}
-                  {/* 
+
                   {role === "oraganisation" && (
                     <InputType
-                      labelText={"organisationName"}
+                      labelText={"Organisation Name"}
                       labelFor={"forOrganisationName"}
                       inputType={"text"}
                       name={"organisationName"}
@@ -146,25 +149,42 @@ function Form({ formType, formTitle, submitBtn }) {
                       onChange={(e) => setOrganisationName(e.target.value)}
                     />
                   )}
+
                   {role === "hospital" && (
                     <InputType
-                      labelText={"HospitalName"}
+                      labelText={"Hospital Name"}
                       labelFor={"forHospitalName"}
                       inputType={"text"}
                       name={"hospitalName"}
                       value={hospitalName}
                       onChange={(e) => setHospitalName(e.target.value)}
                     />
-                  )} */}
+                  )}
 
-                  <InputType
-                    labelText={"Website"}
-                    labelFor={"forWebsite"}
-                    inputType={"text"}
-                    name={"website"}
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                  />
+                  {/* NID field for donors */}
+                  {role === "donar" && (
+                    <InputType
+                      labelText={"NID Number"}
+                      labelFor={"forNidNumber"}
+                      inputType={"text"}
+                      name={"nidNumber"}
+                      value={nidNumber}
+                      onChange={(e) => setNidNumber(e.target.value)}
+                    />
+                  )}
+
+                  {/* Website field: hide if user is a donor */}
+                  {role !== "donar" && (
+                    <InputType
+                      labelText={"Website"}
+                      labelFor={"forWebsite"}
+                      inputType={"text"}
+                      name={"website"}
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                    />
+                  )}
+
                   <InputType
                     labelText={"Address"}
                     labelFor={"forAddress"}
@@ -184,6 +204,8 @@ function Form({ formType, formTitle, submitBtn }) {
                 </>
               );
             }
+            default:
+              return null;
           }
         })()}
 
@@ -191,13 +213,13 @@ function Form({ formType, formTitle, submitBtn }) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           type="submit"
-          className="w-full mt-5 bg-black flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black-600 hover:bg-black "
+          className="w-full mt-5 bg-black flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black-600 hover:bg-black"
         >
           {submitBtn}
         </motion.button>
         {formType === "login" ? (
           <p className="mt-4 text-center text-sm text-gray-600">
-            Not registerd yet ?{" "}
+            Not registered yet?{" "}
             <Link
               to="/register"
               className="font-medium text-black hover:text-black"
@@ -207,7 +229,7 @@ function Form({ formType, formTitle, submitBtn }) {
           </p>
         ) : (
           <p className="mt-4 text-center text-sm text-gray-600">
-            Already User Please{" "}
+            Already a user?{" "}
             <Link
               to="/login"
               className="font-medium text-black hover:text-black"

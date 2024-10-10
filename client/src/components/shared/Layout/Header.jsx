@@ -38,8 +38,8 @@ function Header() {
                 <div className="flex mx-4 text-xl text-black ">
                   <h3>Welcome_ </h3>
                   <h3>{user?.name}</h3>
-                  {/* <h3>{user?.organisationName}</h3> */}
-                  {/* <h3>{user?.hospitalName}</h3> */}
+                  <h3>{user?.organisationName}</h3>
+                  <h3>{user?.hospitalName}</h3>
                 </div>
                 <span className="inline-block px-2 py-1 text-sm font-semibold text-black bg-green-400 rounded">
                   {user?.role}

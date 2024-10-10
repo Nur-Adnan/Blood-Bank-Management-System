@@ -19,7 +19,7 @@ export const userLogin = createAsyncThunk(
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {
-        alert("error accrued");
+        alert("error occurred");
         return rejectWithValue(error.message);
       }
     }
@@ -36,26 +36,37 @@ export const userRegister = createAsyncThunk(
       email,
       password,
       phone,
-      // organisationName,
+      organisationName,
       address,
-      // hospitalName,
+      hospitalName,
+      nidNumber, // Add nidNumber here
       website,
       history,
     },
     { rejectWithValue }
   ) => {
     try {
-      const { data } = await API.post("/auth/register", {
+      // Define the registration payload conditionally based on the role
+      const registrationData = {
         name,
         role,
         email,
         password,
         phone,
-        // organisationName,
+        organisationName,
         address,
-        // hospitalName,
-        website,
-      });
+        hospitalName,
+      };
+
+      // If the role is "donar", include nidNumber and exclude website
+      if (role === "donar") {
+        registrationData.nidNumber = nidNumber;
+      } else {
+        registrationData.website = website;
+      }
+
+      // Make the API call
+      const { data } = await API.post("/auth/register", registrationData);
 
       if (data?.success) {
         toast.success(data.message);
