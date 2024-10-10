@@ -4,22 +4,31 @@ const colors = require("colors");
 const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./config/db");
-//dot config
+const Nid = require("./models/nidModel"); // Import the Nid model
+const userModel = require("./models/userModel"); // Import the user model
+const bloodRequestRoutes = require("./routes/bloodRequests"); // Import the route
+
+// dot config
 dotenv.config();
 
 const allowedOrigins = [
-  "https://blood-bank-management-system-drab.vercel.app",
-  "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
+  "http://localhost:3000",
+  // "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
 ];
-// mongodb connection
-connectDB()
-  .then(() => {})
-  .catch(() => {});
 
-// rest object
+// MongoDB connection
+connectDB()
+  .then(() => {
+    console.log("Database connected successfully".green);
+  })
+  .catch(() => {
+    console.error("Database connection failed".red);
+  });
+
+// REST object
 const app = express();
 
-// middlewares
+// Middlewares
 app.use(express.json());
 app.use(
   cors({
@@ -36,29 +45,35 @@ app.use(
 );
 app.use(morgan("dev"));
 
-// routs
-// 1 test routs
+// Routes
+// Use the route
+app.use("/api/v1/blood-requests", bloodRequestRoutes);
+
+// Test route
 app.use("/api/v1/test", require("./routes/testRouts"));
 
-// register route
+// Register route
 app.use("/api/v1/auth", require("./routes/authRoutes"));
 
-// inventory route
+// Inventory route
 app.use("/api/v1/inventory", require("./routes/inventoryRoutes"));
 
-// analytics route
+// Analytics route
 app.use("/api/v1/analytics", require("./routes/analyticsRoutes"));
 
-// admin route
+// Admin route
 app.use("/api/v1/admin", require("./routes/adminRoutes"));
 
-// port
+// Donor details route
+app.use("/api/v1/donors", require("./routes/donorRoutes")); // Added route for donor details
+
+// Server port
 const PORT = process.env.PORT || 8080;
 
-// listen
+// Listen
 app.listen(PORT, () => {
   console.log(
-    `Node server is running In ${process.env.DEV_MODE} Mode on ${process.env.PORT} port`
+    `Node server is running in ${process.env.DEV_MODE} mode on port ${PORT}`
       .bgBlue.white
   );
 });

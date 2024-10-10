@@ -35,9 +35,9 @@ const inventorySchema = new mongoose.Schema(
     donar: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "userModel",
-      // required: function () {
-      //   return this.inventoryType === "in";
-      // },
+      required: function () {
+        return this.inventoryType === "in";
+      },
     },
   },
   {

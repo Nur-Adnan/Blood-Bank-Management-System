@@ -10,33 +10,33 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: function () {
-        if (this.role === "user" || this.role === "admin") {
-          return true;
-        }
-        return false;
+        return this.role === "admin" || this.role === "donar";
       },
     },
-    // organisationName: {
-    //   type: String,
-    //   required: function () {
-    //     if (this.role === "oraganisation") {
-    //       return true;
-    //     }
-    //     return false;
-    //   },
-    // },
-    // hospitalName: {
-    //   type: String,
-    //   required: function () {
-    //     if (this.role === "hospital") {
-    //       return true;
-    //     }
-    //     return false;
-    //   },
-    // },
+    organisationName: {
+      type: String,
+      required: function () {
+        return this.role === "oraganisation";
+      },
+    },
+    hospitalName: {
+      type: String,
+      required: function () {
+        return this.role === "hospital";
+      },
+    },
+    nidNumber: {
+      type: String,
+      required: function () {
+        return this.role === "donar";
+      },
+      unique: function () {
+        return this.role === "donar";
+      },
+    },
     email: {
       type: String,
-      require: [true, "email is required"],
+      required: [true, "email is required"],
       unique: true,
     },
     password: {
@@ -45,6 +45,9 @@ const userSchema = new mongoose.Schema(
     },
     website: {
       type: String,
+      required: function () {
+        return this.role !== "donar";
+      },
     },
     address: {
       type: String,
