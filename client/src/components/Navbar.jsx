@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiSearch, FiLogIn, FiUserPlus } from "react-icons/fi"; // Importing modern icons
+import { FiSearch, FiLogIn, FiUserPlus, FiFileText } from "react-icons/fi"; // FiFileText can be used as a request icon
+import BloodDonationLogo from "../assets/Blood-Donation-Logo.png";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,8 +16,7 @@ const Navbar = () => {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     console.log("Searching for:", searchTerm);
-    // You can also navigate to a search page here, e.g.,
-    // navigate(`/search?query=${searchTerm}`);
+    navigate(`/search?query=${searchTerm}`); // Navigate to a search page
   };
 
   // Function to handle navigation
@@ -25,83 +25,72 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md py-4">
-      <div className="container mx-auto px-6 md:px-8 flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-3xl font-bold text-blue-600">
-          <a
-            href="/"
-            className="hover:text-blue-700 transition-colors duration-300"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavigate("/");
-            }}
+    <header className="bg-white shadow-md z-50 sticky top-0">
+      <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo Section */}
+          <button
+            className="flex-shrink-0 cursor-pointer focus:outline-none"
+            onClick={() => handleNavigate("/")}
           >
-            MyLogo
-          </a>
-        </div>
+            <img
+              src={BloodDonationLogo}
+              alt="Blood Donation Logo"
+              className="w-16 h-16"
+            />
+          </button>
 
-        {/* Search Bar & Buttons */}
-        <div className="flex items-center space-x-4">
+          {/* This div pushes everything to the right */}
+          <div className="flex-grow"></div>
+
           {/* Search Bar */}
           <form
-            className="hidden md:flex items-center max-w-2xl relative"
             onSubmit={handleSearchSubmit}
+            className="flex items-center justify-center lg:justify-end"
           >
-            {/* Search Input */}
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              className="w-full pl-10 pr-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-300"
-              placeholder="Search by Blood Group or City"
-            />
-
-            {/* Search Icon positioned inside the input */}
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-              <FiSearch size={20} />
+            <div className="relative w-full max-w-md">
+              <label htmlFor="search" className="sr-only">
+                Search
+              </label>
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <FiSearch className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="search"
+                name="search"
+                type="search"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
             </div>
           </form>
 
-          {/* Sign In / Sign Up buttons */}
-          <div className="flex space-x-4">
+          {/* Action Buttons */}
+          <div className="flex items-center space-x-4 ml-4">
+            <button
+              onClick={() => handleNavigate("/register")}
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+            >
+              <FiFileText className="mr-2" /> Request
+            </button>
             <button
               onClick={() => handleNavigate("/login")}
-              className="text-gray-600 hover:text-blue-600 transition-colors duration-300 flex items-center"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-150 ease-in-out"
             >
-              <FiLogIn size={20} className="mr-2" /> {/* Login Icon */}
-              Sign In
+              <FiLogIn className="mr-2" /> Login
             </button>
             <button
               onClick={() => handleNavigate("/register")}
-              className="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 shadow-md flex items-center"
+              className="inline-flex items-center px-4 py-2 border border-red-600 text-sm font-medium rounded-md text-red-600 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-150 ease-in-out"
             >
-              <FiUserPlus size={20} className="mr-2" /> {/* User Plus Icon */}
-              Sign Up
+              <FiUserPlus className="mr-2" /> Register
             </button>
           </div>
         </div>
-
-        {/* Mobile Search Bar */}
-        <div className="md:hidden w-full px-6 py-4">
-          <form onSubmit={handleSearchSubmit} className="flex items-center">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={handleSearchChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-shadow duration-300"
-              placeholder="Search by Blood Group or City"
-            />
-            <button
-              type="submit"
-              className="ml-2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors duration-300"
-            >
-              <FiSearch size={20} /> {/* Search Icon */}
-            </button>
-          </form>
-        </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

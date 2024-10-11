@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios"; // Make sure to install axios for making HTTP requests
 import DonorList from "../components/DonorList";
 import RequestBlood from "../components/RequestBlood";
 import BloodRequestsList from "../components/BloodRequestsList";
+
+import "./Home.css";
+import Footer from "./Footer";
+import Blog from "../components/Blog";
+import Hero from "../components/Hero";
+
+import FAQ from "../components/FAQ";
+import Facts from "../components/Facts";
 
 function HomePage() {
   const { user } = useSelector((state) => state.auth);
@@ -45,25 +53,104 @@ function HomePage() {
   if (!user) {
     return (
       <>
-        <div className="min-h-screen bg-red-50 flex flex-col items-center justify-center">
-          <h1 className="text-4xl text-red-700 font-bold mb-6">
-            Welcome to Blood Bank Management
-          </h1>
-          <p className="text-xl mb-12">
-            Ensuring safe blood for everyone, everywhere.
-          </p>
-          <div className="space-x-4">
-            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-              Donate Blood
-            </button>
-            <button className="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded">
-              Request Blood
-            </button>
+        <Hero />
+        <div className="container px-6 py-16 mx-auto text-center mb-10">
+          <div className="max-w-screen-xl mx-auto mt-20">
+            <div className="wrapper">
+              {/* Setting background images for left items */}
+              <div className="itemLeft item1"></div>
+              <div className="itemLeft item2"></div>
+              <div className="itemLeft item3"></div>
+              <div className="itemLeft item4"></div>
+              <div className="itemLeft item5"></div>
+            </div>
+            <div className="wrapper">
+              {/* Setting background images for right items */}
+              <div className="itemRight item1"></div>
+              <div className="itemRight item2"></div>
+              <div className="itemRight item3"></div>
+              <div className="itemRight item4"></div>
+              <div className="itemRight item5"></div>
+            </div>
           </div>
-          <DonorList />
-          <RequestBlood />
-          <BloodRequestsList />
         </div>
+        <Blog />
+        <Facts />
+        <DonorList />
+        <section>
+          {/* Container */}
+          <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
+            {/* Component */}
+            <div className="grid items-center gap-8 sm:gap-20 lg:grid-cols-2 lg:gap-5">
+              <div>
+                <h2 className="mb-6 max-w-2xl text-3xl font-bold md:mb-10 md:text-5xl lg:mb-12">
+                  Donate Blood, Save Lives in Bangladesh
+                </h2>
+                {/* List */}
+                <ul className="grid max-w-lg grid-cols-2 gap-4">
+                  <li className="flex items-center">
+                    <img
+                      src="https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a9473e2e6cf65_tick-circle.svg"
+                      alt=""
+                      className="mr-2 h-8 w-8"
+                    />
+                    <p className="text-sm sm:text-base">
+                      Thousands in need daily
+                    </p>
+                  </li>
+                  <li className="flex items-center">
+                    <img
+                      src="https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a9473e2e6cf65_tick-circle.svg"
+                      alt=""
+                      className="mr-2 h-8 w-8"
+                    />
+                    <p className="text-sm sm:text-base">
+                      Safe and easy process
+                    </p>
+                  </li>
+                  <li className="flex items-center">
+                    <img
+                      src="https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a9473e2e6cf65_tick-circle.svg"
+                      alt=""
+                      className="mr-2 h-8 w-8"
+                    />
+                    <p className="text-sm sm:text-base">Regular blood camps</p>
+                  </li>
+                  <li className="flex items-center">
+                    <img
+                      src="https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a9473e2e6cf65_tick-circle.svg"
+                      alt=""
+                      className="mr-2 h-8 w-8"
+                    />
+                    <p className="text-sm sm:text-base">
+                      Make a difference today
+                    </p>
+                  </li>
+                </ul>
+                {/* Divider */}
+                <div className="mb-10 mt-10 w-full max-w-lg border-b border-gray-300 "></div>
+                <Link
+                  to={""}
+                  className="inline-block bg-red-600 px-6 py-3 font-semibold text-white"
+                >
+                  Become a Donor
+                </Link>
+              </div>
+              <div>
+                <img
+                  src="https://media.istockphoto.com/id/1528456016/vector/blood-donation-inscription-isolated-on-white-and-created-with-vector-red-blood-drops-heart.jpg?s=612x612&w=0&k=20&c=IqqmzD_mjWdc8YZS84U5TvDunUDKFvNKndxmbeAh6HA="
+                  alt="Blood Donation in Bangladesh"
+                  className="mx-auto inline-block h-full w-full max-w-2xl shadow-lg rounded-md"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        <RequestBlood />
+        <BloodRequestsList />
+
+        <FAQ />
+        <Footer />
       </>
     );
   }

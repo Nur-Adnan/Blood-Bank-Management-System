@@ -5,7 +5,11 @@ module.exports = {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        raleway: ["Raleway", "sans-serif"], // Add Raleway font family
+      },
+    },
   },
   plugins: [require("@tailwindcss/forms")],
 };

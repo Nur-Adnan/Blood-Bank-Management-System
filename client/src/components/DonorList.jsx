@@ -1,6 +1,7 @@
 // src/components/DonorList.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FiUser, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 
 const DonorList = () => {
   const [donors, setDonors] = useState([]);
@@ -19,26 +20,48 @@ const DonorList = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-center my-6">Donor List</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section>
+      {/* Container */}
+      <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
+        {/* Title */}
+        <h2 className="text-center text-3xl font-bold md:text-5xl mb-16">
+          Blood Donors
+        </h2>
         {error && (
-          <p className="text-red-500 text-center col-span-full">{error}</p>
+          <p className="mx-auto mb-8 mt-4 text-center text-sm text-red-500">
+            {error}
+          </p>
         )}
-        {donors.map((donor) => (
-          <div
-            key={donor._id}
-            className="bg-white shadow-lg rounded-lg p-6 transition-transform duration-200 hover:scale-105"
-          >
-            <h2 className="text-xl font-bold">{donor.name}</h2>
-            <p>Email: {donor.email}</p>
-            <p>Phone: {donor.phone}</p>
-            <p>NID Number: {donor.nidNumber}</p>
-            <p>Address: {donor.address}</p>
-          </div>
-        ))}
+        {/* Content */}
+        <div className="mx-auto grid max-w-8xl justify-items-center gap-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 lg:gap-10">
+          {/* Mapping Donors */}
+          {donors.map((donor) => (
+            <div
+              key={donor._id}
+              className="flex max-w-lg flex-col items-start gap-4 rounded-md border border-solid border-gray-300 px-8 py-6 transition-transform duration-300 hover:scale-105"
+            >
+              {/* Placeholder Image */}
+              <img
+                src="https://firebasestorage.googleapis.com/v0/b/flowspark-1f3e0.appspot.com/o/Tailspark%20Images%2FPlaceholder%20Image.svg?alt=media&token=375a1ea3-a8b6-4d63-b975-aac8d0174074"
+                alt={donor.name}
+                className="mb-4 inline-block h-64 w-full object-cover rounded-lg"
+              />
+              {/* Donor Information */}
+              <p className="font-bold text-xl">{donor.name}</p>
+              <p className="text-sm text-gray-500 flex items-center">
+                <FiMail className="mr-2 text-red-600" /> {donor.email}
+              </p>
+              <p className="text-sm text-gray-500 flex items-center">
+                <FiPhone className="mr-2 text-red-600" /> {donor.phone}
+              </p>
+              <p className="text-sm text-gray-500 flex items-center">
+                <FiMapPin className="mr-2 text-red-600" /> {donor.address}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
