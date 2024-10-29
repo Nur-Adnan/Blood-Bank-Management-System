@@ -10,7 +10,7 @@ const DonorList = () => {
   useEffect(() => {
     axios
       .get(
-        "https://blood-bank-management-system-8e2n.onrender.com//api/v1/donors"
+        "https://blood-bank-management-system-8e2n.onrender.com/api/v1/donors"
       )
       .then((response) => {
         setDonors(response.data);

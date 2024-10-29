@@ -23,7 +23,7 @@ function RequestBlood() {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://blood-bank-management-system-8e2n.onrender.com//api/v1/blood-requests",
+        "https://blood-bank-management-system-8e2n.onrender.com/api/v1/blood-requests",
         formData
       );
       console.log("Request Submitted:", res.data);
