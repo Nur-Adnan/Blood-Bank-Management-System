@@ -2,6 +2,12 @@ const userModel = require("../models/userModel");
 const Nid = require("../models/nidModel"); // Import the NID model
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const cloudinary = require("../config/cloudinaryConfig"); // Import Cloudinary configuration
+
+// Multer configuration for image upload
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // Register controller
 const registerController = async (req, res) => {
@@ -16,9 +22,47 @@ const registerController = async (req, res) => {
       });
     }
 
-    // If the user is registering as a donor, validate NID number and name
+    // If the user is registering as a donor, validate NID number, name, gender, blood group, and city
     if (req.body.role === "donar") {
-      const nidRecord = await Nid.findOne({ nid_number: req.body.nidNumber });
+      const { nidNumber, name, gender, bloodGroup, city } = req.body;
+
+      // Check for required donor fields
+      if (!gender || !bloodGroup || !city) {
+        return res.status(400).send({
+          success: false,
+          message: "Gender, blood group, and city are required for donors",
+        });
+      }
+
+      // Validate gender, blood group, and city input
+      const validGenders = ["male", "female", "other"];
+      const validBloodGroups = [
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "O+",
+        "O-",
+      ];
+
+      if (!validGenders.includes(gender)) {
+        return res.status(400).send({
+          success: false,
+          message: "Invalid gender selection",
+        });
+      }
+
+      if (!validBloodGroups.includes(bloodGroup)) {
+        return res.status(400).send({
+          success: false,
+          message: "Invalid blood group selection",
+        });
+      }
+
+      // Validate NID number and name against the NID database
+      const nidRecord = await Nid.findOne({ nid_number: nidNumber });
 
       // If NID record is not found
       if (!nidRecord) {
@@ -29,12 +73,32 @@ const registerController = async (req, res) => {
       }
 
       // If the full name does not match the NID record
-      if (nidRecord.full_name !== req.body.name) {
+      if (nidRecord.full_name !== name) {
         return res.status(400).send({
           success: false,
           message: "Full name does not match the NID record",
         });
       }
+
+      // Upload profile picture if provided
+      let profilePictureUrl = "";
+      if (req.file) {
+        const result = await new Promise((resolve, reject) => {
+          cloudinary.uploader
+            .upload_stream(
+              { resource_type: "image", folder: "profile_pictures" },
+              (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+              }
+            )
+            .end(req.file.buffer);
+        });
+        profilePictureUrl = result.secure_url;
+      }
+
+      // Add profile picture URL to request body
+      req.body.profilePicture = profilePictureUrl;
     }
 
     // Hash the password before saving the user

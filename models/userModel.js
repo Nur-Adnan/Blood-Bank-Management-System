@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema(
   {
     role: {
       type: String,
-      required: [true, "role is required"],
-      enum: ["admin", "oraganisation", "donar", "hospital"],
+      required: [true, "Role is required"],
+      enum: ["admin", "organisation", "donar", "hospital"],
     },
     name: {
       type: String,
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
     organisationName: {
       type: String,
       required: function () {
-        return this.role === "oraganisation";
+        return this.role === "organisation";
       },
     },
     hospitalName: {
@@ -36,12 +36,12 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, "email is required"],
+      required: [true, "Email is required"],
       unique: true,
     },
     password: {
       type: String,
-      required: [true, "password is required"],
+      required: [true, "Password is required"],
     },
     website: {
       type: String,
@@ -51,11 +51,38 @@ const userSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: [true, "address is required"],
+      required: [true, "Address is required"],
     },
     phone: {
       type: String,
-      required: [true, "phone number is required"],
+      required: [true, "Phone number is required"],
+    },
+    // Donor-specific fields
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      required: function () {
+        return this.role === "donar";
+      },
+    },
+    bloodGroup: {
+      type: String,
+      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      required: function () {
+        return this.role === "donar";
+      },
+    },
+    city: {
+      type: String,
+      required: function () {
+        return this.role === "donar";
+      },
+    },
+    profilePicture: {
+      type: String,
+      required: function () {
+        return this.role === "donar";
+      },
     },
   },
   { timestamps: true }

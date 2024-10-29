@@ -5,11 +5,14 @@ const {
   currentUserController,
 } = require("../controllers/authController");
 const authMiddleware = require("../middlewares/authMiddelware");
+const multer = require("multer");
 
 const router = express.Router();
+const upload = multer();
 
 //routes
-router.post("/register", registerController);
+
+router.post("/register", upload.single("profilePicture"), registerController);
 
 // login route
 router.post("/login", loginController);
