@@ -11,9 +11,14 @@ const bloodRequestRoutes = require("./routes/bloodRequests"); // Import the rout
 // dot config
 dotenv.config();
 
+// const allowedOrigins = [
+//   // "http://localhost:3000",
+//   "blood-bank-management-system-drab.vercel.app",
+//   "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
+// ];
+
 const allowedOrigins = [
-  // "http://localhost:3000",
-  "blood-bank-management-system-drab.vercel.app",
+  "https://blood-bank-management-system-drab.vercel.app",
   "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
 ];
 
