@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import API from "../../../services/API";
 
-//login
+// Login
 export const userLogin = createAsyncThunk(
   "auth/login",
   async ({ email, password, role, history }, { rejectWithValue }) => {
     try {
       const { data } = await API.post("/auth/login", { role, email, password });
-      // store token
+      // Store token
       if (data.success) {
         localStorage.setItem("token", data.token);
         toast.success(data.message);
@@ -19,58 +19,34 @@ export const userLogin = createAsyncThunk(
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
       } else {
-        alert("error occurred");
+        alert("An error occurred during login");
         return rejectWithValue(error.message);
       }
     }
   }
 );
 
-// register
+// Register
 export const userRegister = createAsyncThunk(
   "auth/register",
   async (
     {
-      name,
-      role,
-      email,
-      password,
-      phone,
-      organisationName,
-      address,
-      hospitalName,
-      nidNumber, // Add nidNumber here
-      website,
+      formData, // Expecting FormData for registration, including profile picture
       history,
     },
     { rejectWithValue }
   ) => {
     try {
-      // Define the registration payload conditionally based on the role
-      const registrationData = {
-        name,
-        role,
-        email,
-        password,
-        phone,
-        organisationName,
-        address,
-        hospitalName,
-      };
-
-      // If the role is "donar", include nidNumber and exclude website
-      if (role === "donar") {
-        registrationData.nidNumber = nidNumber;
-      } else {
-        registrationData.website = website;
-      }
-
-      // Make the API call
-      const { data } = await API.post("/auth/register", registrationData);
+      // Make the API call using FormData
+      const { data } = await API.post("/auth/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (data?.success) {
         toast.success(data.message);
-        history("/login"); // Use history for navigation
+        history("/login"); // Redirect to login upon successful registration
         return data;
       } else {
         console.error("Unexpected response data:", data);
@@ -89,10 +65,10 @@ export const userRegister = createAsyncThunk(
   }
 );
 
-// get current user
+// Get current user
 export const getcurrentUser = createAsyncThunk(
   "auth/getcurrentUser",
-  async ({ rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const res = await API.get("/auth/currentuser");
       if (res?.data) {

@@ -9,7 +9,7 @@ export const handleLogin = (e, email, password, role, history) => {
     }
     store.dispatch(userLogin({ email, password, role, history }));
   } catch (error) {
-    alert("error occurred");
+    alert("An error occurred during login");
     console.log(error);
   }
 };
@@ -24,40 +24,53 @@ export const handleRegister = (
   organisationName,
   address,
   hospitalName,
-  nidNumber, // Added nidNumber parameter
+  nidNumber,
   website,
+  gender,
+  bloodGroup,
+  city,
+  profilePicture, // New parameter for profile picture
   history
 ) => {
   e.preventDefault();
   try {
-    // Prepare the registration data conditionally based on the role
-    const registrationData = {
-      name,
-      role,
-      email,
-      password,
-      phone,
-      organisationName,
-      address,
-      hospitalName,
-    };
+    // Create form data to handle file upload alongside other fields
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("role", role);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("phone", phone);
+    formData.append("address", address);
 
-    // If the role is "donar", include nidNumber and omit the website
+    // Conditionally add fields based on the role
     if (role === "donar") {
-      registrationData.nidNumber = nidNumber;
+      formData.append("nidNumber", nidNumber);
+      formData.append("gender", gender);
+      formData.append("bloodGroup", bloodGroup);
+      formData.append("city", city);
+
+      // Add profile picture if provided
+      if (profilePicture) {
+        formData.append("profilePicture", profilePicture);
+      }
+    } else if (role === "organisation") {
+      formData.append("organisationName", organisationName);
+    } else if (role === "hospital") {
+      formData.append("hospitalName", hospitalName);
     } else {
-      registrationData.website = website;
+      formData.append("website", website);
     }
 
-    // Dispatch the registration action with the appropriate data
+    // Dispatch the registration action with formData and history
     store.dispatch(
       userRegister({
-        ...registrationData,
+        formData,
         history,
       })
     );
   } catch (error) {
-    alert("error occurred");
+    alert("An error occurred during registration");
     console.log(error);
   }
 };
