@@ -25,17 +25,17 @@ function Header() {
 
   return (
     <>
-      <div className=" hidden md:block  ">
+      <div className="hidden md:block">
         <div
-          className="sticky top-0 z-10 flex-shrink-0 h-16  bg-white border-b  flex 
-        "
+          className="sticky top-16 z-10 flex-shrink-0 h-16 bg-white border-b flex"
+          style={{ marginTop: "64px" }} // Adjust to match navbar height
         >
           <div className="flex-1 flex justify-end px-4 md:px-0">
             <div className="absolute top-0 left-0 bottom-0 right-0 my-2 ml-6"></div>
-            <div className="ml-4 flex mr-4 items-center md:ml-6 z-0 ">
-              <div className="flex items-center  mx-4">
+            <div className="ml-4 flex mr-4 items-center md:ml-6 z-0">
+              <div className="flex items-center mx-4">
                 <UserIcon />
-                <div className="flex mx-4 text-xl text-black ">
+                <div className="flex mx-4 text-xl text-black">
                   <h3>Welcome_ </h3>
                   <h3>{user?.name}</h3>
                   <h3>{user?.organisationName}</h3>

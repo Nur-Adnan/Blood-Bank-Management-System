@@ -29,7 +29,7 @@ const DonarList = () => {
           <Spinner />
         ) : (
           <>
-            <div className="md:pl-64 ">
+            <div className="md:pl-64">
               <h1 className="flex mt-8 items-center text-balck mb-2 justify-center font-serif text-6xl font-bold mx-8 py-2  rounded-lg">
                 Welcome Admin {user?.name}
               </h1>

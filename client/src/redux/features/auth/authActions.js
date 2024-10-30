@@ -12,7 +12,19 @@ export const userLogin = createAsyncThunk(
       if (data.success) {
         localStorage.setItem("token", data.token);
         toast.success(data.message);
-        history("/home");
+
+        // Redirect based on user role
+        if (role === "admin") {
+          history("/admin");
+        } else if (role === "organisation") {
+          history("/organisation");
+        } else if (role === "donar") {
+          history("/donar");
+        } else if (role === "hospital") {
+          history("/hospital");
+        } else {
+          history("/home");
+        }
       }
       return data;
     } catch (error) {

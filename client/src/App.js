@@ -18,7 +18,6 @@ import Analytics from "./pages/Analytics";
 import Inventory from "./pages/DashBoard/Inventory";
 import Navbar from "./components/Navbar"; // Import the Navbar component
 
-
 function App() {
   return (
     <>
