@@ -13,21 +13,23 @@ import AdminHome from "./pages/Admin/AdminHome";
 import DonarList from "./pages/Admin/DonarList";
 import HospitalList from "./pages/Admin/HospitalList";
 import OrgList from "./pages/Admin/OrgList";
+import PostList from "./pages/Admin/PostList";
 import HomePage from "./pages/HomePage";
 import Analytics from "./pages/Analytics";
 import Inventory from "./pages/DashBoard/Inventory";
-import Navbar from "./components/Navbar"; // Import the Navbar component
+import Navbar from "./components/Navbar";
+import Search from "./components/Search";
 
 function App() {
   return (
     <>
       <ToastContainer />
       <Navbar />
-
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/search" element={<Search />} />
         <Route
           path="/inventory"
           element={<ProtectedRoute>{<Inventory />}</ProtectedRoute>}
@@ -67,6 +69,10 @@ function App() {
         <Route
           path="/organisation-list"
           element={<ProtectedRoute>{<OrgList />}</ProtectedRoute>}
+        />
+        <Route
+          path="/post-list"
+          element={<ProtectedRoute>{<PostList />}</ProtectedRoute>}
         />
         <Route
           path="/analytics"

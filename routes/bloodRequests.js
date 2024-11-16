@@ -33,4 +33,15 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Delete a specific blood request by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await BloodRequest.findByIdAndDelete(id);
+    res.status(200).json({ message: "Blood request deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete blood request", error });
+  }
+});
+
 module.exports = router;
