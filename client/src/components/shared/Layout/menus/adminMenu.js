@@ -19,4 +19,10 @@ export const adminMenue = [
     icon: NgoIcon,
     current: false,
   },
+  {
+    name: "Post List",
+    href: "/post-list",
+    icon: NgoIcon,
+    current: false,
+  },
 ];
