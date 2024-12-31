@@ -13,6 +13,7 @@ import Hero from "../components/Hero";
 
 import FAQ from "../components/FAQ";
 import Facts from "../components/Facts";
+import FeedbackDisplay from "../components/FeedbackDisplay";
 
 function HomePage() {
   const { user } = useSelector((state) => state.auth);
@@ -45,6 +46,8 @@ function HomePage() {
     } else if (user?.role === "hospital" || user?.role === "donor") {
       return <Navigate to={"/organisation"} />;
     } else if (user?.role === "admin") {
+      return <Navigate to={"/donor-list"} />;
+    } else if (user?.role === "patient") {
       return <Navigate to={"/donor-list"} />;
     }
   };
@@ -148,7 +151,7 @@ function HomePage() {
         </section>
         <RequestBlood />
         <BloodRequestsList />
-
+        <FeedbackDisplay />
         <FAQ />
         <Footer />
       </>

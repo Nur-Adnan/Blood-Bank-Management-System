@@ -5,12 +5,16 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       required: [true, "Role is required"],
-      enum: ["admin", "organisation", "donar", "hospital"],
+      enum: ["admin", "organisation", "donar", "hospital", "patient"],
     },
     name: {
       type: String,
       required: function () {
-        return this.role === "admin" || this.role === "donar";
+        return (
+          this.role === "admin" ||
+          this.role === "donar" ||
+          this.role === "patient"
+        );
       },
     },
     organisationName: {
@@ -46,7 +50,7 @@ const userSchema = new mongoose.Schema(
     website: {
       type: String,
       required: function () {
-        return this.role !== "donar";
+        return this.role === "organisation" || this.role === "hospital";
       },
     },
     address: {
@@ -57,7 +61,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Phone number is required"],
     },
-    // Donor-specific fields
     gender: {
       type: String,
       enum: ["male", "female", "other"],

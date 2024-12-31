@@ -6,6 +6,7 @@ const {
 } = require("../controllers/authController");
 const authMiddleware = require("../middlewares/authMiddelware");
 const multer = require("multer");
+const userModel = require("../models/userModel");
 
 const router = express.Router();
 const upload = multer();

@@ -12,7 +12,7 @@ const PostList = () => {
     const fetchBloodRequests = async () => {
       try {
         const response = await axios.get(
-          "https://blood-bank-management-system-8e2n.onrender.com/api/v1/blood-requests"
+          "http://localhost:8080/api/v1/blood-requests"
         );
         console.log("Fetched Blood Requests:", response.data); // Log fetched data
         setData(response.data); // Set fetched data into state
@@ -28,9 +28,7 @@ const PostList = () => {
   // Handle delete request
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `https://blood-bank-management-system-8e2n.onrender.com/api/v1/blood-requests/${id}`
-      );
+      await axios.delete(`http://localhost:8080/api/v1/blood-requests/${id}`);
       setData((prevData) => prevData.filter((request) => request._id !== id)); // Remove the deleted item from state
     } catch (error) {
       console.error("Error deleting blood request:", error);

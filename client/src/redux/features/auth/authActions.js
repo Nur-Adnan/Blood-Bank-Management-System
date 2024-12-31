@@ -22,6 +22,8 @@ export const userLogin = createAsyncThunk(
           history("/donar");
         } else if (role === "hospital") {
           history("/hospital");
+        } else if (role === "patient") {
+          history("/patient");
         } else {
           history("/home");
         }

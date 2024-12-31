@@ -10,6 +10,7 @@ const roles = [
   { id: "organisation", title: "Organisation" },
   { id: "donar", title: "Donor" },
   { id: "hospital", title: "Hospital" },
+  { id: "patient", title: "Patient" },
 ];
 
 const genders = ["male", "female", "other"];
@@ -55,10 +56,11 @@ function Form({ formType, formTitle, submitBtn }) {
               hospitalName,
               role === "donar" ? nidNumber : null,
               role !== "donar" ? website : null,
+              role !== "patient" ? website : null,
               gender,
               bloodGroup,
               city,
-              profilePicture, // Pass profile picture
+              profilePicture,
               history
             );
           }
@@ -140,7 +142,7 @@ function Form({ formType, formTitle, submitBtn }) {
                     onChange={(e) => setPassword(e.target.value)}
                   />
 
-                  {(role === "admin" || role === "donar") && (
+                  {(role === "admin" || role === "donar" || "patient") && (
                     <InputType
                       labelText="Name"
                       labelFor="name"
@@ -172,7 +174,6 @@ function Form({ formType, formTitle, submitBtn }) {
                       onChange={(e) => setHospitalName(e.target.value)}
                     />
                   )}
-
                   {role === "donar" && (
                     <>
                       <InputType
@@ -237,7 +238,7 @@ function Form({ formType, formTitle, submitBtn }) {
                     </>
                   )}
 
-                  {role !== "donar" && (
+                  {role !== "donar" && role !== "patient" && (
                     <InputType
                       labelText="Website"
                       labelFor="website"

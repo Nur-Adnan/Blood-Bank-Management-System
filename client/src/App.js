@@ -14,11 +14,17 @@ import DonarList from "./pages/Admin/DonarList";
 import HospitalList from "./pages/Admin/HospitalList";
 import OrgList from "./pages/Admin/OrgList";
 import PostList from "./pages/Admin/PostList";
+import PatientHome from "./pages/Patient/PatientHome";
+import PatientDonarList from "./pages/Patient/DonarList";
+import PatientHospitalList from "./pages/Patient/HospitalList";
+import PatientList from "./pages/Patient/PatientList";
+import PatientOrgList from "./pages/Patient/OrgList";
 import HomePage from "./pages/HomePage";
 import Analytics from "./pages/Analytics";
 import Inventory from "./pages/DashBoard/Inventory";
 import Navbar from "./components/Navbar";
 import Search from "./components/Search";
+import FeedbackForm from "./components/Feedback";
 
 function App() {
   return (
@@ -77,6 +83,30 @@ function App() {
         <Route
           path="/analytics"
           element={<ProtectedRoute>{<Analytics />}</ProtectedRoute>}
+        />
+        <Route
+          path="/patient"
+          element={<ProtectedRoute>{<PatientHome />}</ProtectedRoute>}
+        />
+        <Route
+          path="/patient-donar-list"
+          element={<ProtectedRoute>{<PatientDonarList />}</ProtectedRoute>}
+        />
+        <Route
+          path="/patient-hospital-list"
+          element={<ProtectedRoute>{<PatientHospitalList />}</ProtectedRoute>}
+        />
+        <Route
+          path="/patient-organisation-list"
+          element={<ProtectedRoute>{<PatientOrgList />}</ProtectedRoute>}
+        />
+        <Route
+          path="/patient-list"
+          element={<ProtectedRoute>{<PatientList />}</ProtectedRoute>}
+        />
+        <Route
+          path="/patient-feedback"
+          element={<ProtectedRoute>{<FeedbackForm />}</ProtectedRoute>}
         />
       </Routes>
     </>

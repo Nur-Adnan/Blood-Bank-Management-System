@@ -4,6 +4,7 @@ import { OrganistionMenue } from "./menus/organisationMenu";
 import { hospitalMenue } from "./menus/hospitalMenu";
 import { donarMenue } from "./menus/donarMenu";
 import { adminMenue } from "./menus/adminMenu";
+import { patientMenue } from "./menus/patientMenu";
 import { useSelector } from "react-redux";
 import { printMenu } from "./menus/PrintMenu";
 
@@ -21,6 +22,8 @@ function SideBar() {
       setnavigation(donarMenue);
     } else if (user?.role === "admin") {
       setnavigation(adminMenue);
+    } else if (user?.role === "patient") {
+      setnavigation(patientMenue);
     }
   }, [user?.role]);
 
