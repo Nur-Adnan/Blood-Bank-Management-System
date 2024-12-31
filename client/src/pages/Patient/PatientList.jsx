@@ -21,7 +21,9 @@ const PatientList = () => {
 
   // Initialize socket connection
   useEffect(() => {
-    const newSocket = io("localhost:8080");
+    const newSocket = io(
+      "https://blood-bank-management-system-8e2n.onrender.com"
+    );
     setSocket(newSocket);
     if (user) {
       newSocket.emit("join", { userId: user._id, userType: "donar" });
