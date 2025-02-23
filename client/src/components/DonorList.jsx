@@ -2,16 +2,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FiUser, FiMail, FiPhone, FiMapPin, FiDroplet } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 const DonorList = () => {
+  const { t } = useTranslation();
   const [donors, setDonors] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     axios
-      .get(
-        "https://blood-bank-management-system-8e2n.onrender.com/api/v1/donors"
-      )
+      .get("http://localhost:8080/api/v1/donors")
       .then((response) => {
         setDonors(response.data);
       })
@@ -27,7 +27,7 @@ const DonorList = () => {
       <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
         {/* Title */}
         <h2 className="text-center text-3xl font-bold md:text-5xl mb-16">
-          Blood Donors
+          {t("bloodDonorsComponent.title")}
         </h2>
         {error && (
           <p className="mx-auto mb-8 mt-4 text-center text-sm text-red-500">

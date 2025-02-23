@@ -23,15 +23,13 @@ function printMenu(navigation) {
               item.current
                 ? "bg-gray-100 text-gray-900"
                 : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-              "group rounded-md py-2 px-2 flex items-center text-xl mx-2 my-2 font-medium"
+              "group rounded-md py-2 px-2 flex items-center text-lg mx-2 my-2 font-medium"
             )}
           >
             <item.icon
               className={classNames(
-                item.current
-                  ? "text-gray-500 "
-                  : "text-gray-400 group-hover:text-gray-500",
-                "mr-3 flex-shrink-0 h-6 w-6"
+                "text-black", // Set icon color to black
+                "mr-3 flex-shrink-0 h-4 w-4" // Adjust size to be smaller
               )}
               aria-hidden="true"
             />

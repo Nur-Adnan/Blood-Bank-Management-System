@@ -14,8 +14,10 @@ import Hero from "../components/Hero";
 import FAQ from "../components/FAQ";
 import Facts from "../components/Facts";
 import FeedbackDisplay from "../components/FeedbackDisplay";
+import { useTranslation } from "react-i18next";
 
 function HomePage() {
+  const { t } = useTranslation();
   const { user } = useSelector((state) => state.auth);
   const [donors, setDonors] = useState([]);
 
@@ -87,7 +89,7 @@ function HomePage() {
             <div className="grid items-center gap-8 sm:gap-20 lg:grid-cols-2 lg:gap-5">
               <div>
                 <h2 className="mb-6 max-w-2xl text-3xl font-bold md:mb-10 md:text-5xl lg:mb-12">
-                  Donate Blood, Save Lives in Bangladesh
+                  {t("bloodPointsComponent.title")}
                 </h2>
                 {/* List */}
                 <ul className="grid max-w-lg grid-cols-2 gap-4">
@@ -98,7 +100,7 @@ function HomePage() {
                       className="mr-2 h-8 w-8"
                     />
                     <p className="text-sm sm:text-base">
-                      Thousands in need daily
+                      {t("bloodPointsComponent.points.thousandsDaily")}
                     </p>
                   </li>
                   <li className="flex items-center">
@@ -108,7 +110,7 @@ function HomePage() {
                       className="mr-2 h-8 w-8"
                     />
                     <p className="text-sm sm:text-base">
-                      Safe and easy process
+                      {t("bloodPointsComponent.points.safeProcess")}
                     </p>
                   </li>
                   <li className="flex items-center">
@@ -117,7 +119,9 @@ function HomePage() {
                       alt=""
                       className="mr-2 h-8 w-8"
                     />
-                    <p className="text-sm sm:text-base">Regular blood camps</p>
+                    <p className="text-sm sm:text-base">
+                      {t("bloodPointsComponent.points.regularCamps")}
+                    </p>
                   </li>
                   <li className="flex items-center">
                     <img
@@ -126,7 +130,7 @@ function HomePage() {
                       className="mr-2 h-8 w-8"
                     />
                     <p className="text-sm sm:text-base">
-                      Make a difference today
+                      {t("bloodPointsComponent.points.makeDifference")}
                     </p>
                   </li>
                 </ul>
@@ -136,7 +140,7 @@ function HomePage() {
                   to={""}
                   className="inline-block bg-red-600 px-6 py-3 font-semibold text-white"
                 >
-                  Become a Donor
+                  {t("bloodPointsComponent.becomeDonor")}
                 </Link>
               </div>
               <div>

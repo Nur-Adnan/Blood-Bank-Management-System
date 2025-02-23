@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const Facts = () => {
+  const { t } = useTranslation();
   // Define state for each number
   const [bloodBanks, setBloodBanks] = useState(0);
   const [donations, setDonations] = useState(0);
@@ -36,32 +38,39 @@ const Facts = () => {
         <div className="mx-auto w-full max-w-7xl px-5 py-16 md:px-10 md:py-20">
           {/* Title */}
           <h2 className="text-center text-3xl font-bold md:text-5xl">
-            Blood Donation in Bangladesh
+            {t("factsComponent.title")}
           </h2>
           <p className="mx-auto mb-8 mt-4 max-w-lg items-center text-center text-sm text-gray-500 sm:text-base md:mb-12 lg:mb-16 font-semibold p-6">
-            Every donation saves lives. Here are some key statistics on blood
-            donation efforts in Bangladesh.
+            {t("factsComponent.description")}
           </p>
           {/* Content */}
           <div className="mx-auto flex w-full max-w-4xl flex-col flex-wrap justify-between gap-5 px-16 sm:flex-row md:gap-6">
             <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-sm font-semibold">Blood Banks</p>
+              <p className="text-sm font-semibold">
+                {t("factsComponent.facts.bloodBanks")}
+              </p>
               <h2 className="text-3xl font-bold md:text-6xl">{bloodBanks}+</h2>
             </div>
             <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-sm font-semibold">Annual Blood Donations</p>
+              <p className="text-sm font-semibold">
+                {t("factsComponent.facts.annualDonations")}
+              </p>
               <h2 className="text-3xl font-bold md:text-6xl">
                 {donations.toLocaleString()}
               </h2>
             </div>
             <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-sm font-semibold">Lives Saved Annually</p>
+              <p className="text-sm font-semibold">
+                {t("factsComponent.facts.livesSaved")}
+              </p>
               <h2 className="text-3xl font-bold md:text-6xl">
                 {livesSaved.toLocaleString()}+
               </h2>
             </div>
             <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-sm font-semibold">Voluntary Donors</p>
+              <p className="text-sm font-semibold">
+                {t("factsComponent.facts.voluntaryDonors")}
+              </p>
               <h2 className="text-3xl font-bold md:text-6xl">
                 {voluntaryDonors}%
               </h2>

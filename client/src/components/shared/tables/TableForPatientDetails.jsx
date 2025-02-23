@@ -1,84 +1,82 @@
+import React from "react";
 import moment from "moment";
+import { FiMail } from "react-icons/fi";
 import { motion } from "framer-motion";
+
 export default function TableForPatientDetails({ data, list, onMessageClick }) {
   return (
-    <div className="flex md:pl-64 m-8  flex-col">
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className=" mt-2">
-          <h1 className="flex items-center text-white mb-2 justify-center font-serif text-6xl font-bold bg-gradient-to-b from-red-600 to-pink-300 mx-8 rounded-lg">
-            {list}
-          </h1>
-        </div>
-        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 ">
-              <thead className="bg-gray-50  ">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    email
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    phone
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    time And date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Message
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200 ">
-                {data.map((record) => (
-                  <tr key={record._id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {record?.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+    <div className="container mx-auto px-4 sm:px-8">
+      <div className="py-8">
+        <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 text-transparent bg-clip-text drop-shadow-lg mb-6 text-center">
+          <span className="text-5xl sm:text-7xl font-extrabold bg-gradient-to-r from-red-500 via-red-500 to-pink-500 text-transparent bg-clip-text drop-shadow-lg mb-6 text-center">
+            {list[0]}
+          </span>
+          {list.slice(1)}
+        </h1>
+        <div className="overflow-x-auto bg-white rounded-sm shadow-lg">
+          <table className="min-w-full leading-normal">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-lg font-bold text-gray-700 uppercase tracking-wider bg-gray-100">
+                  Name
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-lg font-bold text-gray-700 uppercase tracking-wider bg-white">
+                  Email
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-lg font-bold text-gray-700 uppercase tracking-wider bg-gray-100">
+                  Phone
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-lg font-bold text-gray-700 uppercase tracking-wider bg-white">
+                  Date & Time
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 text-left text-lg font-bold text-gray-700 uppercase tracking-wider bg-gray-100">
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((record, index) => (
+                <motion.tr
+                  key={record._id}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  className="hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <td className="px-5 py-5 border-b border-gray-200 text-sm bg-gray-100">
+                    <p className="text-gray-900 whitespace-no-wrap font-medium">
+                      {record.name}
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 text-sm bg-white">
+                    <p className="text-gray-700 whitespace-no-wrap">
                       {record.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 text-sm bg-gray-100">
+                    <p className="text-gray-700 whitespace-no-wrap">
                       {record.phone}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 text-sm bg-white">
+                    <p className="text-gray-700 whitespace-no-wrap">
                       {moment(record.updatedAt).format("DD/MM/YYYY hh:mm A")}
-                    </td>
-                    <td className="px-6 py-4 items-center whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex item-left">
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          type="button"
-                          onClick={() => onMessageClick(record)}
-                          className="button   inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none  "
-                        >
-                          Message
-                        </motion.button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 text-sm bg-gray-100 flex justify-center items-center">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => onMessageClick(record)}
+                      className="bg-[#e21e1e] hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-150 ease-in-out flex items-center"
+                    >
+                      <FiMail className="mr-2" /> Message
+                    </motion.button>
+                  </td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

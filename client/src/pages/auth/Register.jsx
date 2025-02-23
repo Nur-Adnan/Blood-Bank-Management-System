@@ -11,11 +11,15 @@ const Register = () => {
         <Spinner />
       ) : (
         <div className="md:flex h-screen items-center justify-center ">
-          <div className="rounded-xl shadow-xl py-10 bg-gray-50 my-auto items-center">
-            <div className="flex justify-center "></div>
+          <div className="rounded-xl shadow-xl bg-gray-50 my-auto items-center">
+            <div className="flex justify-center"></div>
             <Form
               formType={"register"}
-              formTitle={"Register to your account"}
+              formTitle={
+                <span className="text-red-500 text-5xl tracking-widest">
+                  <span className="text-6xl">R</span>egister
+                </span>
+              }
               submitBtn={"Register"}
             />
           </div>

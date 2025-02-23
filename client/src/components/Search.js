@@ -10,9 +10,7 @@ const Search = () => {
   const [bloodType, setBloodType] = useState("");
   useEffect(() => {
     axios
-      .get(
-        "https://blood-bank-management-system-8e2n.onrender.com/api/v1/donors"
-      )
+      .get("http://localhost:8080/api/v1/donors")
       .then((response) => {
         const sanitizedData = response.data.map((donor) => ({
           ...donor,

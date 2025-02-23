@@ -1,28 +1,33 @@
-import { DonarIcon, HospitalIcon, NgoIcon } from "../../../shared/Icons";
+import {
+  FaHospital,
+  FaUserAlt,
+  FaClipboardList,
+  FaRegListAlt,
+} from "react-icons/fa";
 
 export const adminMenue = [
   {
     name: "Donar List",
     href: "/donar-list",
-    icon: DonarIcon,
     current: true,
+    icon: FaClipboardList,
   },
   {
-    name: "hospital-list",
+    name: "Hospital List",
     href: "/hospital-list",
-    icon: HospitalIcon,
     current: false,
+    icon: FaHospital,
   },
   {
     name: "Organisation List",
     href: "/organisation-list",
-    icon: NgoIcon,
     current: false,
+    icon: FaUserAlt,
   },
   {
     name: "Post List",
     href: "/post-list",
-    icon: NgoIcon,
+    icon: FaRegListAlt,
     current: false,
   },
 ];

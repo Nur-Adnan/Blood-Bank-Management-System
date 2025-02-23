@@ -2,8 +2,10 @@ import React from "react";
 import { FaArrowRight, FaDownload } from "react-icons/fa";
 import "./Hero.css";
 import bgTwo from "../assets/bg-image-two.png";
+import { useTranslation } from "react-i18next";
 
 const Hero = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <header>
@@ -30,7 +32,7 @@ const Hero = () => {
 
             {/* Title */}
             <h1 className="mb-6 max-w-3xl text-4xl font-bold md:mb-10 md:text-6xl lg:mb-12 text-white">
-              Join the Fight: Blood Donation in Bangladesh
+              {t("heroSection.title")}
             </h1>
 
             {/* Buttons */}
@@ -41,7 +43,7 @@ const Hero = () => {
                   alert("Get Started with Blood Donation!");
                 }}
               >
-                Get Started
+                {t("heroSection.getStarted")}
                 <FaArrowRight className="ml-2" /> {/* Add the arrow icon */}
               </button>
 
@@ -53,7 +55,7 @@ const Hero = () => {
               >
                 <FaDownload className="mr-2 max-h-4 w-5" />{" "}
                 {/* Add the download icon */}
-                <p>Download App</p>
+                <p>{t("heroSection.downloadApp")}</p>
               </button>
             </div>
           </div>
@@ -75,16 +77,12 @@ const Hero = () => {
             <div className="max-w-xl lg:mr-[520px] lg:max-w-xs pr-6">
               {/* Title */}
               <h3 className="text-2xl font-bold md:text-3xl">
-                Why Blood Donation Matters
+                {t("heroSection.whyBloodDonationMatters")}
               </h3>
               {/* Divider */}
               <div className="my-6 w-16 border-t border-black"></div>
               <p className="text-sm text-gray-500 font-normal text-justify leading-relaxed">
-                In Bangladesh, every drop of blood counts. Your donation can
-                save lives, especially during emergencies or for patients in
-                need. Join us in this noble cause and make a difference in your
-                community. Together, we can ensure that no one is deprived of
-                life-saving blood.
+                {t("heroSection.description")}
               </p>
             </div>
             {/* Image */}

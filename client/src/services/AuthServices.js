@@ -29,12 +29,11 @@ export const handleRegister = (
   gender,
   bloodGroup,
   city,
-  profilePicture, // New parameter for profile picture
+  profilePicture,
   history
 ) => {
   e.preventDefault();
   try {
-    // Create form data to handle file upload alongside other fields
     const formData = new FormData();
     formData.append("name", name);
     formData.append("role", role);
@@ -43,14 +42,11 @@ export const handleRegister = (
     formData.append("phone", phone);
     formData.append("address", address);
 
-    // Conditionally add fields based on the role
     if (role === "donar") {
       formData.append("nidNumber", nidNumber);
       formData.append("gender", gender);
       formData.append("bloodGroup", bloodGroup);
       formData.append("city", city);
-
-      // Add profile picture if provided
       if (profilePicture) {
         formData.append("profilePicture", profilePicture);
       }
@@ -62,7 +58,6 @@ export const handleRegister = (
       formData.append("website", website);
     }
 
-    // Dispatch the registration action with formData and history
     store.dispatch(
       userRegister({
         formData,

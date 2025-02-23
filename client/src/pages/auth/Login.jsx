@@ -12,10 +12,14 @@ const Login = () => {
         <Spinner />
       ) : (
         <div className="flex items-center justify-center h-screen bg-gray-100">
-          <div className="max-w-full  bg-white rounded-lg shadow-lg p-8">
+          <div className="max-w-full bg-white rounded-lg shadow-lg px-2">
             <Form
               formType="login"
-              formTitle="Login to your account"
+              formTitle={
+                <span className="text-red-500 text-5xl tracking-widest">
+                  <span className="text-6xl">L</span>ogin
+                </span>
+              }
               submitBtn="Login"
             />
           </div>
