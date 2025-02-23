@@ -7,6 +7,7 @@ const { Server } = require("socket.io");
 const http = require("http");
 const connectDB = require("./config/db");
 const bloodRequestRoutes = require("./routes/bloodRequests");
+const Notification = require("./models/Notification");
 
 // dot config
 dotenv.config();
@@ -14,6 +15,7 @@ dotenv.config();
 // const allowedOrigins = ["http://localhost:3000"];
 
 const allowedOrigins = [
+  "http://localhost:3000",
   "https://blood-bank-management-system-drab.vercel.app",
   "https://blood-bank-management-system-e1vmac1nq-nuradnans-projects.vercel.app",
 ];
@@ -68,6 +70,7 @@ app.use("/api/v1/donors", require("./routes/donorRoutes"));
 app.use("/api/v1/patient", require("./routes/patientRoutes"));
 app.use("/api/v1/chats", require("./routes/chatRoutes"));
 app.use("/api/v1/feedback", require("./routes/feedbackRoutes"));
+app.use("/api/v1/notifications", require("./routes/notificationRoutes"));
 
 // Real-time Chat
 const activeUsers = new Map();
@@ -82,27 +85,53 @@ io.on("connection", (socket) => {
   });
 
   // Handle sending messages
-  socket.on("sendMessage", ({ senderId, senderName, recipientId, message }) => {
-    const recipientSocketId = activeUsers.get(recipientId);
+  socket.on(
+    "sendMessage",
+    async ({ senderId, senderName, recipientId, message, userType }) => {
+      const recipientSocketId = activeUsers.get(recipientId);
 
-    if (recipientSocketId) {
-      // Send the message to the recipient
-      io.to(recipientSocketId).emit("receiveMessage", {
-        senderId,
-        senderName,
-        message,
-      });
+      if (recipientSocketId) {
+        // Save the notification to the database
+        // Validate and normalize userType
+        const normalizedType = userType === "donar" ? "donor" : userType;
+        const notification = new Notification({
+          senderId,
+          senderName,
+          senderType: normalizedType, // Use normalized type
+          recipient: recipientId,
+          message: `New message from ${senderName}: "${message}"`,
+          read: false,
+        });
+        await notification.save();
 
-      // Send a notification for the message
-      io.to(recipientSocketId).emit("receiveNotification", {
-        message: `New message from ${senderName}: "${message}"`,
-      });
+        const recipientSocketId = activeUsers.get(recipientId);
+        if (recipientSocketId) {
+          io.to(recipientSocketId).emit("newNotification", notification);
+          console.log(`Notification sent to ${recipientId}`.blue);
+        }
+        // Send the message to the recipient
+        io.to(recipientSocketId).emit("receiveMessage", {
+          senderId,
+          senderName,
+          message,
+          timestamp: new Date().toISOString(),
+        });
 
-      console.log(`Message sent from ${senderId} to ${recipientId}`.blue);
-    } else {
-      console.log(`User with ID ${recipientId} is not connected`.red);
+        // Send a notification for the message
+        io.to(recipientSocketId).emit("receiveNotification", {
+          senderId,
+          senderName,
+          senderType: userType,
+          message: `New message from ${senderName}: "${message}"`,
+          timestamp: new Date().toISOString(),
+        });
+
+        console.log(`Message sent from ${senderId} to ${recipientId}`.blue);
+      } else {
+        console.log(`User with ID ${recipientId} is not connected`.red);
+      }
     }
-  });
+  );
 
   // Remove user from activeUsers map on disconnect
   socket.on("disconnect", () => {

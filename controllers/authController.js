@@ -28,6 +28,13 @@ const registerController = async (req, res) => {
 
       // Check for required donor fields
       if (!gender || !bloodGroup || !city) {
+        console.log("Request Body:", req.body);
+        console.log("Missing required donor fields:", {
+          gender,
+          bloodGroup,
+          city,
+        });
+
         return res.status(400).send({
           success: false,
           message: "Gender, blood group, and city are required for donors",
@@ -48,6 +55,7 @@ const registerController = async (req, res) => {
       ];
 
       if (!validGenders.includes(gender)) {
+        console.log("Invalid gender selected:", gender);
         return res.status(400).send({
           success: false,
           message: "Invalid gender selection",
@@ -55,6 +63,7 @@ const registerController = async (req, res) => {
       }
 
       if (!validBloodGroups.includes(bloodGroup)) {
+        console.log("Invalid blood group selected:", bloodGroup);
         return res.status(400).send({
           success: false,
           message: "Invalid blood group selection",
@@ -66,6 +75,7 @@ const registerController = async (req, res) => {
 
       // If NID record is not found
       if (!nidRecord) {
+        console.log("NID number not found in the database:", nidNumber);
         return res.status(400).send({
           success: false,
           message: "NID number not found in the NID database",
@@ -74,6 +84,10 @@ const registerController = async (req, res) => {
 
       // If the full name does not match the NID record
       if (nidRecord.full_name !== name) {
+        console.log("Full name mismatch for NID:", {
+          nidRecordName: nidRecord.full_name,
+          providedName: name,
+        });
         return res.status(400).send({
           success: false,
           message: "Full name does not match the NID record",
@@ -83,6 +97,7 @@ const registerController = async (req, res) => {
       // Upload profile picture if provided
       let profilePictureUrl = "";
       if (req.file) {
+        console.log("Uploading profile picture...");
         const result = await new Promise((resolve, reject) => {
           cloudinary.uploader
             .upload_stream(
@@ -95,6 +110,10 @@ const registerController = async (req, res) => {
             .end(req.file.buffer);
         });
         profilePictureUrl = result.secure_url;
+        console.log(
+          "Profile picture uploaded successfully:",
+          result.secure_url
+        );
       }
 
       // Add profile picture URL to request body
@@ -109,6 +128,7 @@ const registerController = async (req, res) => {
     // Create and save the new user
     const user = new userModel(req.body);
     await user.save();
+    console.log("User registered successfully:", user);
 
     // Return success response
     return res.status(201).send({
@@ -209,8 +229,5 @@ const currentUserController = async (req, res) => {
     });
   }
 };
-
-
-
 
 module.exports = { registerController, loginController, currentUserController };
